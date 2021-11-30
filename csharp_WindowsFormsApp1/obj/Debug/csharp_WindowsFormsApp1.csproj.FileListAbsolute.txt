@@ -1,0 +1,10 @@
+C:\myprojs\test\csharp_WindowsFormsApp1\bin\Debug\csharp_WindowsFormsApp1.exe.config
+C:\myprojs\test\csharp_WindowsFormsApp1\bin\Debug\csharp_WindowsFormsApp1.exe
+C:\myprojs\test\csharp_WindowsFormsApp1\bin\Debug\csharp_WindowsFormsApp1.pdb
+C:\myprojs\test\csharp_WindowsFormsApp1\obj\Debug\csharp_WindowsFormsApp1.Properties.Resources.resources
+C:\myprojs\test\csharp_WindowsFormsApp1\obj\Debug\csharp_WindowsFormsApp1.csproj.GenerateResource.cache
+C:\myprojs\test\csharp_WindowsFormsApp1\obj\Debug\csharp_WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\myprojs\test\csharp_WindowsFormsApp1\obj\Debug\csharp_WindowsFormsApp1.exe
+C:\myprojs\test\csharp_WindowsFormsApp1\obj\Debug\csharp_WindowsFormsApp1.pdb
+C:\myprojs\test\csharp_WindowsFormsApp1\obj\Debug\csharp_WindowsFormsApp1.Form1.resources
+C:\myprojs\test\csharp_WindowsFormsApp1\obj\Debug\csharp_WindowsFormsApp1.csproj.AssemblyReference.cache
