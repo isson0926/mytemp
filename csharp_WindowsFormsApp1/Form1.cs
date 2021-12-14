@@ -29,37 +29,45 @@ namespace csharp_WindowsFormsApp1
         }
 
         public void TestThread() {
-            int cnt = 0;
-            while(exit == false) {
-                Test("test message " + (cnt++).ToString());
+
+            while(true) {
+                Test();
                 Thread.Sleep(10);
             }
+
+            Console.WriteLine("Thread exit");
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Thread thd = new Thread(new ThreadStart(TestThread));
+            thd = new Thread(new ThreadStart(TestThread));
             thd.Start();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            exit = true;
         }
 
-        public void Test(string text) {
-            if(this.InvokeRequired)  {
+        public void Test() {
+
+            if (this.InvokeRequired)  {
                 var d = new SafeCallDelegate(Test);
-                this.Invoke(d, new object[] { text });
+                this.Invoke(d);
             }
             else {
 
             }
 
-            this.Text = text;
+            this.Text = "abc";
         }
 
-        bool exit = false;
-        private delegate void SafeCallDelegate(string text);
+
+        private delegate void SafeCallDelegate();
+        private Thread thd;
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            thd.Abort();
+        }
     }
 }
