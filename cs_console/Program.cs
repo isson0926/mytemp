@@ -74,31 +74,29 @@ namespace cs_console
         static string read(SerialPort sp) {
             
             List<byte> byteList = new List<byte>();
-            sp.DiscardInBuffer();
 
             for(;;) {
                 try {
-                    if(0 < sp.BytesToRead) {
-                        int rb = (byte)sp.ReadByte();
-                        if(rb == -1) {
-                            Console.WriteLine("end of stream");
-                            return String.Empty;
-                        }
-
-                        byte b = (byte)rb;
-                        Console.WriteLine(b.ToString());
-                        if      (b == 0x2) { continue; }
-                        else if (b == 0x3) {
-                           byte [] byteArray = new byte[byteList.Count]; 
-                           for(int i = 0; i < byteList.Count; i++) {
-                               byteArray[i] = byteList[i];
-                           }
-                           return Encoding.Default.GetString(byteArray);
-                        }
-                        else { byteList.Add(b); }
+                    int rb = (byte)sp.ReadByte();
+                    if(rb == -1) {
+                        Console.WriteLine("end of stream");
+                        return String.Empty;
                     }
 
-                    //Thread.Sleep(1);
+                    byte b = (byte)rb;
+                    //Console.WriteLine("readByte , byte = " + b.ToString());
+
+                    byteList.Add(b); 
+
+                    if (b == 0x3) {
+                       byte [] byteArray = new byte[byteList.Count]; 
+                       for(int i = 0; i < byteList.Count; i++) {
+                           byteArray[i] = byteList[i];
+                       }
+                       return Encoding.Default.GetString(byteArray);
+                    }
+
+                    Thread.Sleep(100);
                 }
                 catch(Exception) {
                     Console.WriteLine("error!");
