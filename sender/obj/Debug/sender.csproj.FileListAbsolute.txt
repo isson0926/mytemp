@@ -1,0 +1,7 @@
+C:\tmp\sender\bin\Debug\sender.exe.config
+C:\tmp\sender\bin\Debug\sender.exe
+C:\tmp\sender\bin\Debug\sender.pdb
+C:\tmp\sender\obj\Debug\sender.csproj.AssemblyReference.cache
+C:\tmp\sender\obj\Debug\sender.csproj.CoreCompileInputs.cache
+C:\tmp\sender\obj\Debug\sender.exe
+C:\tmp\sender\obj\Debug\sender.pdb
