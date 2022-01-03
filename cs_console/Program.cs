@@ -19,7 +19,8 @@ namespace cs_console
                 sp.DataBits = 8;
                 sp.StopBits = StopBits.One;
                 sp.Parity   = Parity.None;
-                sp.ReadBufferSize = 1024 * 10;
+                //sp.ReadBufferSize = 1024 * 10;
+                sp.ReadTimeout = 1000 * 60;
                 sp.ErrorReceived += new SerialErrorReceivedEventHandler(serialPort_ErrorReceived);
 
                 sp.Open();
@@ -27,8 +28,8 @@ namespace cs_console
 
                 int cnt = 0;
                 for(;;) {
-                    //string recvmsg = read(sp);
-                    string _recvmsg = read2(sp);
+                    string _recvmsg = read(sp);
+                    //string _recvmsg = read2(sp);
                     //string _recvmsg = sp.ReadLine();
                     string recvmsg = String.Empty;
                     for(int i = 0; i < _recvmsg.Length; i++) {
@@ -77,23 +78,25 @@ namespace cs_console
 
             for(;;) {
                 try {
-                    int rb = (byte)sp.ReadByte();
-                    if(rb == -1) {
-                        Console.WriteLine("end of stream");
-                        return String.Empty;
-                    }
+                    if(0 < sp.BytesToRead) {
+                        int rb = (byte)sp.ReadByte();
+                        if(rb == -1) {
+                            Console.WriteLine("end of stream");
+                            return String.Empty;
+                        }
 
-                    byte b = (byte)rb;
-                    Console.WriteLine(b.ToString());
-                    if      (b == 0x2) { continue; }
-                    else if (b == 0x3) {
-                       byte [] byteArray = new byte[byteList.Count]; 
-                       for(int i = 0; i < byteList.Count; i++) {
-                           byteArray[i] = byteList[i];
-                       }
-                       return Encoding.Default.GetString(byteArray);
+                        byte b = (byte)rb;
+                        Console.WriteLine(b.ToString());
+                        if      (b == 0x2) { continue; }
+                        else if (b == 0x3) {
+                           byte [] byteArray = new byte[byteList.Count]; 
+                           for(int i = 0; i < byteList.Count; i++) {
+                               byteArray[i] = byteList[i];
+                           }
+                           return Encoding.Default.GetString(byteArray);
+                        }
+                        else { byteList.Add(b); }
                     }
-                    else { byteList.Add(b); }
 
                     //Thread.Sleep(1);
                 }

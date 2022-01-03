@@ -5,3 +5,10 @@ C:\tmp\cs_console\obj\Debug\cs_console.csproj.AssemblyReference.cache
 C:\tmp\cs_console\obj\Debug\cs_console.csproj.CoreCompileInputs.cache
 C:\tmp\cs_console\obj\Debug\cs_console.exe
 C:\tmp\cs_console\obj\Debug\cs_console.pdb
+C:\mytemp\cs_console\bin\Debug\cs_console.exe.config
+C:\mytemp\cs_console\bin\Debug\cs_console.exe
+C:\mytemp\cs_console\bin\Debug\cs_console.pdb
+C:\mytemp\cs_console\obj\Debug\cs_console.csproj.AssemblyReference.cache
+C:\mytemp\cs_console\obj\Debug\cs_console.csproj.CoreCompileInputs.cache
+C:\mytemp\cs_console\obj\Debug\cs_console.exe
+C:\mytemp\cs_console\obj\Debug\cs_console.pdb
