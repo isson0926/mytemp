@@ -14,11 +14,13 @@ namespace cs_console
         {        
             try {
                 SerialPort sp = new SerialPort();
-                sp.PortName = "COM3";
-                sp.BaudRate = 9600;  //보레이트 변경이 필요하면 숫자 변경하기
-                sp.DataBits = 8;
-                sp.StopBits = StopBits.One;
-                sp.Parity   = Parity.None;
+                sp.PortName   = "COM3";
+                sp.BaudRate   = 9600;  //보레이트 변경이 필요하면 숫자 변경하기
+                sp.DataBits   = 8;
+                sp.StopBits   = StopBits.One;
+                sp.Parity     = Parity.None;
+                sp.Handshake  = Handshake.XOnXOff;
+                sp.DtrEnable  = true;
 
                 sp.Open();
                 sp.DiscardInBuffer();
@@ -31,7 +33,7 @@ namespace cs_console
                     string recvmsg3       = extractMessage(read(sp));
                     string printStatusMsg = decodeMessage(recvmsg1, recvmsg2, recvmsg3);
 
-                    Console.WriteLine("[" + cnt.ToString("D5") + "]" + " " + printStatusMsg  );
+                    Console.WriteLine("[V2] " + "[" + cnt.ToString("D5") + "]" + " " + printStatusMsg  );
                     cnt++;
                 }
                      
