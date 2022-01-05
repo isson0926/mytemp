@@ -14,37 +14,24 @@ namespace cs_console
         {        
             try {
                 SerialPort sp = new SerialPort();
-                sp.PortName = "COM2";
+                sp.PortName = "COM3";
                 sp.BaudRate = 9600;  //보레이트 변경이 필요하면 숫자 변경하기
                 sp.DataBits = 8;
                 sp.StopBits = StopBits.One;
                 sp.Parity   = Parity.None;
-                //sp.ReadBufferSize = 1024 * 10;
-                sp.ReadTimeout = 1000 * 60;
-                sp.ErrorReceived += new SerialErrorReceivedEventHandler(serialPort_ErrorReceived);
 
                 sp.Open();
                 sp.DiscardInBuffer();
 
                 int cnt = 0;
                 for(;;) {
-                    string _recvmsg = read(sp);
-                    //string _recvmsg = read2(sp);
-                    //string _recvmsg = sp.ReadLine();
-                    string recvmsg = String.Empty;
-                    for(int i = 0; i < _recvmsg.Length; i++) {
-                        if(!((int)_recvmsg[i] == 0x2
-                          || (int)_recvmsg[i] == 0x3 
-                          || (int)_recvmsg[i] == 0xd 
-                          || (int)_recvmsg[i] == 0xa)) { 
-                            recvmsg += _recvmsg[i];
-                        }
-                    }
+                    sp.Write("~HS");
+                    string recvmsg1       = extractMessage(read(sp));
+                    string recvmsg2       = extractMessage(read(sp));
+                    string recvmsg3       = extractMessage(read(sp));
+                    string printStatusMsg = decodeMessage(recvmsg1, recvmsg2, recvmsg3);
 
-                    //byte [] buffer = new byte[6];
-                    //sp.Read(buffer, 0, 6);
-                    //string recvmsg = Encoding.Default.GetString(buffer);
-                    Console.WriteLine("[" + cnt.ToString("D5") + "]" + " " + "'" + recvmsg + "'");
+                    Console.WriteLine("[" + cnt.ToString("D5") + "]" + " " + printStatusMsg  );
                     cnt++;
                 }
                      
@@ -52,23 +39,6 @@ namespace cs_console
             catch(Exception ex) {
                 Console.WriteLine("[error]" + ex.Message);
             }
-        }
-
-        static string read2(SerialPort sp) {
-            int count = 0;
-            var read = new byte[7];
-            while (count < read.Length)
-            {
-                try
-                {
-                    count += sp.Read(read, count, read.Length - count);
-                }
-                catch (TimeoutException)
-                {
-                    Console.WriteLine("read2, timeout exception");
-                }
-            }
-            return Encoding.Default.GetString(read);
         }
 
         static string read(SerialPort sp) {
@@ -95,8 +65,6 @@ namespace cs_console
                        }
                        return Encoding.Default.GetString(byteArray);
                     }
-
-                    Thread.Sleep(100);
                 }
                 catch(Exception) {
                     Console.WriteLine("error!");
@@ -104,31 +72,34 @@ namespace cs_console
             }
         }
 
-        static void serialPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e) {
-            SerialError err = e.EventType;
-            string strErr = "";
-
-            switch (err)
-            {
-                case SerialError.Frame:
-                    strErr = "HardWare Framing Error";
-                    break;
-                case SerialError.Overrun:
-                    strErr = "Charaters Buffer Over Run";
-                    break;
-                case SerialError.RXOver:
-                    strErr = "Input Buffer OverFlow";
-                    break;
-                case SerialError.RXParity:
-                    strErr = "Founded Parity Error";
-                    break;
-                case SerialError.TXFull:
-                    strErr = "Write Buffer was Fulled";
-                    break;
-                default:
-                    break;
+        static string extractMessage(string readmsg) {
+            string emsg = String.Empty;
+            for(int i = 0; i < readmsg.Length; i++) {
+                if(!((int)readmsg[i] == 0x2
+                  || (int)readmsg[i] == 0x3 
+                  || (int)readmsg[i] == 0xd 
+                  || (int)readmsg[i] == 0xa)) { 
+                    emsg += readmsg[i];
+                }
             }
-            Console.WriteLine("error : " + strErr);
+            return emsg;
+        }
+
+        static string decodeMessage(string msg1, string msg2, string msg3) {
+            string[] msgList1 = msg1.Split(',');
+            string[] msgList2 = msg2.Split(',');
+            string[] msgList3 = msg3.Split(',');
+
+            bool paperOut  = msgList1[1].Trim() == "1";
+            bool ribbonOut = msgList2[3].Trim() == "1";
+            bool headUp    = msgList2[2].Trim() == "1";
+            bool pause     = msgList1[2].Trim() == "1";
+
+            return paperOut   ? "용지없음"
+                 : ribbonOut  ? "리본없음"
+                 : headUp     ? "헤더열림"
+                 : pause      ? "프린터중지"
+                 :              "정상" ;
         }
     }
 }
