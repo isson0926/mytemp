@@ -12,6 +12,9 @@ namespace cs_console
     {
         static void Main(string[] args)
         {        
+            Console.WriteLine("press any key to start.");
+            Console.ReadLine();
+
             try {
                 SerialPort sp = new SerialPort();
                 sp.PortName   = "COM3";

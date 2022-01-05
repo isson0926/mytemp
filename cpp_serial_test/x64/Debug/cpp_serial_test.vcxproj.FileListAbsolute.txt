@@ -1,0 +1,1 @@
+C:\mytemp\cpp_serial_test\x64\Debug\cpp_serial_test.exe
