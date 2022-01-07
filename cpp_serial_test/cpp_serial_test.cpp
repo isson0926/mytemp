@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <thread>
 
 using namespace std;
 
@@ -36,11 +37,30 @@ string read_line(HANDLE handle) {
     }
 }
 
+void write_thread(HANDLE sp) {
+    for(;;) {
+        write(sp, "~HS");
+        //cout << "write done." << endl;
+        Sleep(1000);
+    }
+}
+
+void read_thread(HANDLE sp) {
+    for(;;) {
+        string msg1 = read_line(sp);  cout << msg1 ;
+        string msg2 = read_line(sp);  cout << msg2 ;
+        string msg3 = read_line(sp);  cout << msg3 ;
+    }
+}
+
 int main(int argc, char **argv) {
     try {
         if(argc != 2) 
             throw "usage : cpp_serial_test.exe COM4";
 
+        string read_input;
+        cout << "press a key to start. pgm ver 220107-1" << endl;
+        cin >> read_input; 
         string port_name = argv[1];
         string dev_name  = "\\\\.\\" + port_name;
         HANDLE sp        = CreateFile(dev_name.c_str(), GENERIC_READ | GENERIC_WRITE, 0 , NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -61,12 +81,20 @@ int main(int argc, char **argv) {
 
         SetCommState (sp, &dcb);
 
+        /*
         for(;;) {
             write(sp, "~HS");
             cout << "write done" << endl;
-            string msg1 = read_line(sp);  cout << msg1 ;
-            string msg2 = read_line(sp);  cout << msg2 ;
-            string msg3 = read_line(sp);  cout << msg3 ;
+        }
+        */
+
+        for(int i = 0; i < 20; i++)
+            thread *write_thd = new thread(write_thread, sp);
+
+        thread read_thd  (read_thread , sp);
+
+        for(;;) {
+            Sleep(10);
         }
 
         CloseHandle(sp);
