@@ -1,2 +1,0 @@
-bin\Debug\sender.exe
-
