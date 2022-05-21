@@ -17,3 +17,19 @@
 [650]Texture::Texture(C:\mytemp\Release/asset/object/player-down2.png)
 [653]Texture::Texture(C:\mytemp\Release/asset/object/player-down3.png)
 [699]loadResource done
+[600]loadResource begin
+[605]Texture::Texture(C:\mytemp\Release/asset/map/Map01/tile0001.png)
+[609]Texture::Texture(C:\mytemp\Release/asset/object/1.png)
+[612]Texture::Texture(C:\mytemp\Release/asset/object/player-left1.png)
+[615]Texture::Texture(C:\mytemp\Release/asset/object/player-left2.png)
+[619]Texture::Texture(C:\mytemp\Release/asset/object/player-left3.png)
+[623]Texture::Texture(C:\mytemp\Release/asset/object/player-right1.png)
+[626]Texture::Texture(C:\mytemp\Release/asset/object/player-right2.png)
+[629]Texture::Texture(C:\mytemp\Release/asset/object/player-right3.png)
+[632]Texture::Texture(C:\mytemp\Release/asset/object/player-up1.png)
+[635]Texture::Texture(C:\mytemp\Release/asset/object/player-up2.png)
+[638]Texture::Texture(C:\mytemp\Release/asset/object/player-up3.png)
+[642]Texture::Texture(C:\mytemp\Release/asset/object/player-down1.png)
+[645]Texture::Texture(C:\mytemp\Release/asset/object/player-down2.png)
+[649]Texture::Texture(C:\mytemp\Release/asset/object/player-down3.png)
+[652]loadResource done
